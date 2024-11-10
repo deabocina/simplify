@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  text-align: center;
+}
+
+* {
+  font-family: "Bona Nova SC";
+}
+
+.link-style {
+  text-decoration: none;
+  color: #5b42f3;
+  transition: color 0.2s ease-in-out;
+}
+
+.link-style:hover {
+  color: #00ddeb;
+}
