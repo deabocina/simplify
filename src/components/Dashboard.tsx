@@ -40,6 +40,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [endDateTime, setEndDateTime] = useState<string>("");
   const [selectedListId, setSelectedListId] = useState<string>("");
+  const [toggleAddTaskInfo, setToggleAddTaskInfo] = useState<boolean>(false);
   const [toggleTasks, setToggleTasks] = useState<{ [listId: string]: boolean }>(
     {}
   );
@@ -314,17 +315,14 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
           <div className="user-info">
             <h2>Simplify</h2>
             {userData && (
-              <p>
+              <p className="text-colour">
                 {userData.name} {userData.surname}
               </p>
             )}
           </div>
+          <img src="/logout.png" id="logout-img" onClick={onLogout}></img>
         </div>
-        <hr></hr>
-
-        <div className="user-profile-options">
-          <img src="/logout.png" onClick={onLogout}></img>
-        </div>
+        <div className="line-style"></div>
 
         <h3>My Lists</h3>
         {listData.map((list) => (
@@ -373,13 +371,14 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
               </div>
             ) : (
               <div className="list-details">
+                <img src="/list-icon.png" />
                 <p>{list.name}</p>
                 <p className="counter-style">{getTaskCountByList(list.id)}</p>
               </div>
             )}
           </p>
         ))}
-        <hr></hr>
+        <div className="line-style"></div>
 
         <div className="new-list">
           <img src="/add.png" onClick={handleAddList}></img>
@@ -395,69 +394,71 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
       </div>
       <div className="task-list">
         {userData && <h1>Hello, {userData.name}!</h1>}
-        <p>It's {getCurrentDate()}</p>
+        <p className="text-colour">It's {getCurrentDate()}</p>
 
         <div className="new-task">
-          <img src="/add.png"></img>
-          <p>New task</p>
-        </div>
-        <hr></hr>
-
-        <div className="new-task-info">
-          <input
-            type="text"
-            value={taskName}
-            placeholder="Create new task"
-            onChange={(e) => setTaskName(e.target.value)}
-            className="register-input"
-            required
-          ></input>
-
-          <div className="calendar-container">
-            <img src="/calendar.png" onClick={toggleDatePicker}></img>
-            {showDatePicker && (
-              <div className="calendar-picker">
-                <label>Start:</label>
+          <img
+            src={!toggleAddTaskInfo ? "/add.png" : "/minus.png"}
+            onClick={() => setToggleAddTaskInfo(!toggleAddTaskInfo)}
+          ></img>
+          {!toggleAddTaskInfo && <p>New Task</p>}
+          {toggleAddTaskInfo && (
+            <>
+              <div className="new-task-info">
                 <input
-                  type="datetime-local"
-                  value={startDateTime}
-                  onChange={(e) => setStartDateTime(e.target.value)}
+                  type="text"
+                  value={taskName}
+                  placeholder="Create new task"
+                  onChange={(e) => setTaskName(e.target.value)}
                   className="register-input"
                   required
-                />
-                <br />
-                <label id="end-date-style">End:</label>
-                <input
-                  type="datetime-local"
-                  value={endDateTime}
-                  onChange={(e) => setEndDateTime(e.target.value)}
+                ></input>
+
+                <div className="calendar-container">
+                  <img src="/calendar.png" onClick={toggleDatePicker}></img>
+                  {showDatePicker && (
+                    <div className="calendar-picker">
+                      <label>Start:</label>
+                      <input
+                        type="datetime-local"
+                        value={startDateTime}
+                        onChange={(e) => setStartDateTime(e.target.value)}
+                        className="register-input"
+                        required
+                      />
+                      <br />
+                      <label id="end-date-style">End:</label>
+                      <input
+                        type="datetime-local"
+                        value={endDateTime}
+                        onChange={(e) => setEndDateTime(e.target.value)}
+                        className="register-input"
+                        required
+                      />
+                      <br />
+                    </div>
+                  )}
+                </div>
+
+                <select
+                  onChange={(e) => setSelectedListId(e.target.value)}
+                  value={selectedListId}
                   className="register-input"
                   required
-                />
-                <br />
+                >
+                  {listData.map((list) => (
+                    <option key={list.id} value={list.id}>
+                      {list.name}
+                    </option>
+                  ))}
+                </select>
+
+                <img src="add-icon.png" onClick={handleAddTask}></img>
               </div>
-            )}
-          </div>
-
-          <select
-            onChange={(e) => setSelectedListId(e.target.value)}
-            value={selectedListId}
-            className="register-input"
-            required
-          >
-            <option value="" disabled>
-              Choose Type
-            </option>
-            {listData.map((list) => (
-              <option key={list.id} value={list.id}>
-                {list.name}
-              </option>
-            ))}
-          </select>
+            </>
+          )}
         </div>
-        <button className="home-button" type="submit" onClick={handleAddTask}>
-          <span className="text">Add Task</span>
-        </button>
+        <div className="line-style"></div>
 
         <div className="tasks-by-lists">
           {listData.length === 0 ||
@@ -477,6 +478,9 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                     <div className="toggle-tasks">
                       <img
                         src="arrow-down.png"
+                        className={`task-arrow ${
+                          toggleTasks[list.id] ? "rotate-task-arrow" : ""
+                        }`}
                         onClick={() => toggleTaskVisibility(list.id)}
                       ></img>
                       <h3>{list.name}</h3>
