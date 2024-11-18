@@ -1,0 +1,168 @@
+/* REGISTER & LOGIN */
+.background-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.register-container {
+  padding: 150px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.register-container h1 {
+  font-size: 50px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.register-container h1:hover {
+  transform: scale(1.2);
+}
+
+.register-form {
+  margin-top: 30px;
+}
+
+.register-form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.register-input {
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid #808080;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.register-input:focus {
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border-image-slice: 1;
+}
+
+.name-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-container input {
+  width: 49%;
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container img {
+  position: absolute;
+  right: 30px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.checkbox-terms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-terms input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-terms label {
+  margin-bottom: 17px;
+}
+
+.home-button {
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 40px;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 5px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.home-button:active,
+.home-button:hover {
+  outline: 0;
+}
+
+.home-button span {
+  background-color: rgb(5, 6, 45);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+.home-button:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .home-button {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    padding: 30px;
+    padding-top: 150px;
+    margin: 0 auto;
+  }
+
+  .name-container {
+    width: 80%;
+    gap: 10px;
+    padding-left: 40px;
+  }
+
+  .register-form input {
+    width: 80%;
+    box-sizing: border-box;
+  }
+
+  .password-container img {
+    right: 60px;
+  }
+
+  .checkbox-terms {
+    padding-left: 40px;
+  }
+
+  .home-button {
+    min-width: 80%;
+    font-size: 18px;
+  }
+}
