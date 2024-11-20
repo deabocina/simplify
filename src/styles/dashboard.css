@@ -108,13 +108,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  transition: padding-left 0.3s ease-in-out;
 }
 
 .list-info:hover {
   background-color: #eaebea5d;
   border-radius: 15px;
-  padding-left: 10px;
 }
 
 .list-info img {
@@ -133,13 +131,12 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-right: 20px;
 }
 
-.list-details img {
+/* .list-details img {
   margin: 16px -52px 0 0;
   cursor: cursor;
-}
+} */
 
 .colour-square {
   width: 20px;
@@ -240,7 +237,6 @@
   justify-content: space-between;
   width: 100%;
   padding-bottom: 12px;
-  gap: 10px;
 }
 
 .new-task-info input,

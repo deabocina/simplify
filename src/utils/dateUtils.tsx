@@ -29,65 +29,47 @@ export const formatDateTime = (date: Date) => {
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
 
-  if (hours === "00" && minutes === "00") {
+  if (hours === "01" && minutes === "00") {
     return `${day}.${month}.${year}.`;
   } else {
     return `${day}.${month}.${year}. ${hours}:${minutes}`;
   }
 };
 
-export const checkDate = (date: Date | Timestamp) => {
-  const dbDate = date instanceof Timestamp ? date.toDate() : date;
+export const checkDate = (
+  date: Timestamp | Date,
+  time?: Timestamp | Date | null
+) => {
+  const dbDate = date instanceof Timestamp ? date.toDate() : new Date(date);
+  const dbTime = time
+    ? time instanceof Timestamp
+      ? time.toDate()
+      : new Date(time)
+    : null;
+
   const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
 
-  const todayStart = new Date(
-    today.getDate(),
-    today.getMonth(),
-    today.getFullYear()
-  );
-  const tomorrowStart = new Date(
-    today.getDate() + 1,
-    today.getMonth(),
-    today.getFullYear()
-  );
+  const isToday = dbDate.toDateString() === today.toDateString();
+  const isTomorrow = dbDate.toDateString() === tomorrow.toDateString();
 
-  if (dbDate.getHours() === 0 && dbDate.getMinutes() === 0) {
-    if (
-      dbDate.getDate() === todayStart.getDate() &&
-      dbDate.getMonth() === todayStart.getMonth() &&
-      dbDate.getFullYear() === todayStart.getFullYear()
-    ) {
-      return `Today`;
-    } else if (
-      dbDate.getDate() === tomorrowStart.getDate() &&
-      dbDate.getMonth() === tomorrowStart.getMonth() &&
-      dbDate.getFullYear() === tomorrowStart.getFullYear()
-    ) {
-      return `Tomorrow`;
-    } else {
-      return formatDateTime(dbDate);
-    }
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  if (isToday) {
+    return dbTime
+      ? `Today, ${dbTime.toLocaleTimeString([], timeOptions)}`
+      : `Today`;
+  } else if (isTomorrow) {
+    return dbTime
+      ? `Tomorrow, ${dbTime.toLocaleTimeString([], timeOptions)}`
+      : `Tomorrow`;
   }
 
-  if (
-    dbDate.getDate() === todayStart.getDate() &&
-    dbDate.getMonth() === todayStart.getMonth() &&
-    dbDate.getFullYear() === todayStart.getFullYear()
-  ) {
-    return `Today, ${dbDate.getHours().toString().padStart(2, "0")}:${dbDate
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  } else if (
-    dbDate.getDate() === tomorrowStart.getDate() &&
-    dbDate.getMonth() === tomorrowStart.getMonth() &&
-    dbDate.getFullYear() === tomorrowStart.getFullYear()
-  ) {
-    return `Tomorrow, ${dbDate.getHours().toString().padStart(2, "0")}:${dbDate
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  } else {
-    return formatDateTime(dbDate);
-  }
+  return dbTime
+    ? `${formatDateTime(dbDate)} ${dbTime.toLocaleTimeString([], timeOptions)}`
+    : `${formatDateTime(dbDate)}`;
 };

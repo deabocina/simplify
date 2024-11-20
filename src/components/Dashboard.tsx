@@ -10,7 +10,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { getCurrentDate } from "../utils/dateUtils";
+import { getCurrentDate, checkDate } from "../utils/dateUtils";
 import { noTasksMessages } from "../utils/taskUtils";
 import { Timestamp } from "firebase/firestore";
 
@@ -36,7 +36,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
       id: string;
       name: string;
       startDate: Timestamp;
-      startTime?: Timestamp;
+      startTime?: Timestamp | null;
     }>;
   }>({});
   const [taskName, setTaskName] = useState<string>("");
@@ -150,15 +150,19 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
       return;
     }
     try {
-      const startDateTime = startTime
-        ? new Date(`${startDate}T${startTime}`)
-        : new Date(`${startDate}T00:00`);
+      const parsedStartDate = Timestamp.fromDate(new Date(startDate));
+      const parsedStartTime = startTime
+        ? Timestamp.fromDate(new Date(`${startDate}T${startTime}`))
+        : null;
+
+      const formattedDate = checkDate(parsedStartDate, parsedStartTime);
 
       const newTask = {
         name: taskName,
-        startDate: Timestamp.fromDate(new Date(startDate)),
-        startTime: Timestamp.fromDate(startDateTime),
+        startDate: parsedStartDate,
+        startTime: parsedStartTime,
         listType: selectedListId,
+        formattedDate,
       };
 
       const taskDoc = await addDoc(
@@ -267,7 +271,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
             id: string;
             name: string;
             startDate: Timestamp;
-            startTime: Timestamp;
+            startTime: Timestamp | null;
           }[];
         } = {}; // Create an empty object for tasks by listId
 
@@ -283,18 +287,25 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                 "tasks"
               )
             );
-            const fetchedTasks = taskDoc.docs.map((task) => ({
-              id: task.id,
-              name: task.data().name,
-              startDate:
+            const fetchedTasks = taskDoc.docs.map((task) => {
+              const startDate =
                 task.data().startDate instanceof Timestamp
-                  ? task.data().startDate.toDate().toLocaleString()
-                  : new Date(task.data().startDate).toLocaleString(),
-              startTime:
-                task.data().startTime instanceof Timestamp
-                  ? task.data().startTime.toDate().toLocaleTimeString()
-                  : new Date(task.data().startTime).toLocaleTimeString(),
-            }));
+                  ? task.data().startDate.toDate()
+                  : new Date(task.data().startDate);
+              const startTime = task.data().startTime
+                ? task.data().startTime instanceof Timestamp
+                  ? task.data().startTime.toDate()
+                  : new Date(task.data().startTime)
+                : null;
+
+              return {
+                id: task.id,
+                name: task.data().name,
+                startDate,
+                startTime,
+                formattedDate: checkDate(startDate, startTime),
+              };
+            });
 
             // Add tasks to object
             listsWithTasks[list.id] = fetchedTasks;
@@ -360,6 +371,11 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                     Edit
                   </button>
                 </li>
+                <li>
+                  <button onClick={() => handleDeleteList(list.id)}>
+                    Delete
+                  </button>
+                </li>
               </ul>
             ) : null}
 
@@ -404,10 +420,10 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                 ></div>
                 <p>{list.name}</p>
                 <p className="counter-style">{getTaskCountByList(list.id)}</p>
-                <img
+                {/* <img
                   src="/close.png"
                   onClick={() => handleDeleteList(list.id)}
-                />
+                /> */}
               </div>
             )}
           </p>
@@ -464,6 +480,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                 <input
                   type="time"
                   value={startTime}
+                  pattern="[0-9]{2}:[0-9]{2}"
                   onChange={(e) => setStartTime(e.target.value)}
                   className="register-input"
                 ></input>
@@ -592,19 +609,23 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                               <p className="task-name-style">{task.name}</p>
                             )}
 
-                            {/* <p
+                            <p
                               className={`task-end-date ${
-                                checkDate(task.startDate).startsWith("Today")
+                                checkDate(
+                                  task.startDate,
+                                  task.startTime
+                                ).startsWith("Today")
                                   ? "today"
-                                  : checkDate(task.startDate).startsWith(
-                                      "Tomorrow"
-                                    )
+                                  : checkDate(
+                                      task.startDate,
+                                      task.startTime
+                                    ).startsWith("Tomorrow")
                                   ? "tomorrow"
                                   : "other"
                               }`}
                             >
-                              {checkDate(task.startDate)}
-                            </p> */}
+                              {checkDate(task.startDate, task.startTime)}
+                            </p>
                           </p>
                         ))}
                       </>
