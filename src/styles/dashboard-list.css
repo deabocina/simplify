@@ -1,0 +1,114 @@
+.task-options {
+  width: 500px;
+  padding: 70px 100px;
+  margin: 0;
+  height: 100vh;
+  background-image: url("/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.task-options input[type="color"] {
+  background-color: transparent;
+  border: none;
+  margin-top: 9px;
+}
+
+.user-profile {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.user-profile img {
+  width: 70px;
+  height: 70px;
+  margin: auto 0;
+}
+
+.user-info {
+  padding-left: 20px;
+}
+
+.user-info p {
+  margin-top: -10px;
+}
+
+#logout-img {
+  position: absolute;
+  margin: 40px 0 0 220px;
+}
+
+#logout-img:hover {
+  animation: wiggle 2s linear infinite;
+}
+
+.list-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.colour-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  margin: 15px 10px 0 0;
+}
+
+.list-details .counter-style {
+  margin-left: auto;
+}
+
+.new-list {
+  display: flex;
+  background-color: #cecece67;
+  transition: background-color 0.5s ease-in-out;
+  border-radius: 15px;
+  padding-left: 15px;
+}
+
+.new-list:hover {
+  background-color: #eaebea5d;
+}
+
+.new-list img {
+  cursor: pointer;
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0 -15px;
+}
+
+.new-list input[type="text"] {
+  background-color: transparent;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+@keyframes wiggle {
+  0%,
+  7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%,
+  100% {
+    transform: rotateZ(0);
+  }
+}

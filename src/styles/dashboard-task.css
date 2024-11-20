@@ -1,0 +1,112 @@
+.task-list {
+  width: 100%;
+  padding-top: 50px;
+}
+
+.greetings {
+  text-align: center;
+}
+
+.new-task {
+  display: flex;
+  gap: 10px;
+  background-color: #eaebea5d;
+  border-radius: 15px;
+  border: 2px solid #cecece67;
+  margin: 50px auto;
+  transition: background-color 0.5s ease;
+}
+
+.new-task.active {
+  background-color: transparent;
+  border: 2px solid white;
+}
+
+.new-task img {
+  width: 20px;
+  height: 20px;
+  padding-top: 15px;
+  padding-left: 15px;
+  cursor: pointer;
+}
+
+.new-task-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 12px;
+}
+
+.new-task-info input,
+.new-task-info select,
+.new-task-info button {
+  margin-top: 15px;
+}
+
+.all-tasks {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.tasks-by-lists {
+  border-radius: 25px;
+  margin-bottom: 10px;
+}
+
+.toggle-tasks {
+  border-radius: 20px;
+}
+
+.toggle-tasks img {
+  padding-left: 20px;
+}
+
+.task-arrow {
+  transition: transform 0.3s ease;
+}
+
+.rotate-task-arrow {
+  transform: scaleY(-1);
+}
+
+#task-options {
+  padding-left: 42px;
+}
+
+#end-date-style {
+  padding-left: 10px;
+}
+
+.task-start {
+  margin-left: auto;
+  margin-right: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.task-start:hover {
+  transform: scale(1.2);
+}
+
+.task-start.today {
+  background-color: rgba(204, 109, 109, 0.205);
+  color: red;
+}
+
+.task-start.tomorrow {
+  background-color: rgba(233, 233, 111, 0.315);
+  color: rgb(146, 146, 55);
+}
+
+.task-start.other {
+  background-color: rgba(219, 243, 183, 0.493);
+  color: green;
+}
+
+@media (min-width: 1024px) {
+  .new-task {
+    width: 600px;
+    margin: 50px auto;
+  }
+}

@@ -1,4 +1,6 @@
 import "../styles/dashboard.css";
+import "../styles/dashboard-list.css";
+import "../styles/dashboard-task.css";
 import { useState, useEffect } from "react";
 import { auth, db } from "../config/firebase";
 import {
@@ -367,11 +369,21 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
             {isOptionsVisible === list.id ? (
               <ul className="options-button">
                 <li>
+                  <img
+                    src="/edit.png"
+                    className="option-icon"
+                    onClick={() => setUpdateListName(list.name)}
+                  />
                   <button onClick={() => setUpdateListName(list.name)}>
                     Edit
                   </button>
                 </li>
                 <li>
+                  <img
+                    src="/close.png"
+                    className="option-icon"
+                    onClick={() => handleDeleteList(list.id)}
+                  />
                   <button onClick={() => handleDeleteList(list.id)}>
                     Delete
                   </button>
@@ -414,16 +426,12 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
             ) : (
               <div className="list-details">
                 <div
-                  className="colour-square"
+                  className="colour-icon"
                   style={{ backgroundColor: list.colour }}
                   title={list.colour}
                 ></div>
                 <p>{list.name}</p>
                 <p className="counter-style">{getTaskCountByList(list.id)}</p>
-                {/* <img
-                  src="/close.png"
-                  onClick={() => handleDeleteList(list.id)}
-                /> */}
               </div>
             )}
           </p>
@@ -440,14 +448,24 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
             type="text"
             value={listName}
             onChange={(e) => setListName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (listName.trim()) {
+                  handleAddList();
+                  setListName("");
+                }
+              }
+            }}
             className="register-input"
             placeholder="Create new list.."
           />
         </div>
       </div>
       <div className="task-list">
-        {userData && <h1>Hello, {userData.name}!</h1>}
-        <p className="text-colour">It's {getCurrentDate()}</p>
+        <div className="greetings">
+          {userData && <h1>Hello, {userData.name}!</h1>}
+          <p className="text-colour">It's {getCurrentDate()}</p>
+        </div>
 
         <div className={`new-task ${toggleAddTaskInfo ? "active" : null}`}>
           <img
@@ -491,6 +509,9 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                   className="register-input"
                   required
                 >
+                  <option value="" disabled>
+                    Choose a list
+                  </option>
                   {listData.map((list) => (
                     <option key={list.id} value={list.id}>
                       {list.name}
@@ -503,9 +524,8 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
             </>
           )}
         </div>
-        <div className="line-style"></div>
 
-        <div className="tasks-container">
+        <div className="all-tasks">
           {listData.length === 0 ||
           Object.values(tasks).every((task) => task.length === 0) ? (
             <p>
@@ -519,12 +539,15 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
             listData.map((list) => (
               <div
                 key={list.id}
-                className="tasks-by-list"
-                style={{ border: `5px solid ${list.colour}` }}
+                className="tasks-by-lists"
+                style={{ border: `3px solid ${list.colour}` }}
               >
                 {tasks[list.id] && tasks[list.id].length > 0 ? (
                   <>
-                    <div className="toggle-tasks">
+                    <div
+                      className="toggle-tasks"
+                      style={{ backgroundColor: list.colour }}
+                    >
                       <img
                         src="arrow-down.png"
                         className={`task-arrow ${
@@ -532,11 +555,12 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                         }`}
                         onClick={() => toggleTaskVisibility(list.id)}
                       ></img>
-                      <h3>{list.name}</h3>
-                      <h3 className="counter-style">
+                      <h2>{list.name}</h2>
+                      <h2 className="counter-style">
                         {getTaskCountByList(list.id)}
-                      </h3>
+                      </h2>
                     </div>
+
                     {toggleTasks[list.id] && (
                       <>
                         {tasks[list.id].map((task) => (
@@ -555,6 +579,13 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                             {isOptionsVisible === task.id ? (
                               <ul className="options-button">
                                 <li>
+                                  <img
+                                    src="/edit.png"
+                                    onClick={() => {
+                                      setUpdateTaskName(task.name);
+                                      setIsOptionsVisible(task.id);
+                                    }}
+                                  ></img>
                                   <button
                                     onClick={() => {
                                       setUpdateTaskName(task.name);
@@ -565,6 +596,12 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                                   </button>
                                 </li>
                                 <li>
+                                  <img
+                                    src="/close.png"
+                                    onClick={() =>
+                                      handleDeleteTask(list.id, task.id)
+                                    }
+                                  ></img>
                                   <button
                                     onClick={() =>
                                       handleDeleteTask(list.id, task.id)
@@ -606,11 +643,11 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                                 }}
                               />
                             ) : (
-                              <p className="task-name-style">{task.name}</p>
+                              <p>{task.name}</p>
                             )}
 
                             <p
-                              className={`task-end-date ${
+                              className={`task-start ${
                                 checkDate(
                                   task.startDate,
                                   task.startTime
