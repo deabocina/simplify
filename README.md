@@ -6,7 +6,7 @@
 
 Simplify is a sleek and intuitive to-do list app designed to help you manage your tasks with ease and clarity. By focusing on simplicity and user-friendliness, Simplify features a minimalist interface, allowing for a seamless experience in managing to-do lists.
 
-![simplify](https://github.com/user-attachments/assets/8660282a-f55d-4525-a289-6c37396f8f62)
+![simplify](https://github.com/user-attachments/assets/db62bbf8-886c-4580-8f37-30d7fe29ab6f)
 
 ## List of Contents
 
