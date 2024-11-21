@@ -33,6 +33,9 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
   const [isOptionsVisible, setIsOptionsVisible] = useState<string | null>(null);
   const [updateListName, setUpdateListName] = useState<string>("");
   const [updateListColour, setUpdateListColour] = useState<string>("");
+
+  const [generatedMessage, setGeneratedMessage] = useState<string | null>(null);
+  const [isMessageGenerated, setIsMessageGenerated] = useState<boolean>(false);
   const [tasks, setTasks] = useState<{
     [listId: string]: Array<{
       id: string;
@@ -46,8 +49,8 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
   const [startTime, setStartTime] = useState<string>("");
   const [selectedListId, setSelectedListId] = useState<string>("");
   const [updateTaskName, setUpdateTaskName] = useState<string>("");
-  const [updateStartDate, setUpdateStartDate] = useState<string>("");
-  const [updateStartTime, setUpdateStartTime] = useState<string>("");
+  // const [updateStartDate, setUpdateStartDate] = useState<string>("");
+  // const [updateStartTime, setUpdateStartTime] = useState<string>("");
   const [toggleAddTaskInfo, setToggleAddTaskInfo] = useState<boolean>(false);
   const [toggleTasks, setToggleTasks] = useState<{ [listId: string]: boolean }>(
     {}
@@ -146,6 +149,23 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
       console.log(`Error updating list: ${error}`);
     }
   };
+
+  useEffect(() => {
+    const noTasks =
+      listData.length === 0 ||
+      Object.keys(tasks).length === 0 ||
+      Object.values(tasks).every((taskList) => taskList.length === 0);
+
+    if (!isMessageGenerated && noTasks) {
+      const randomMessage =
+        noTasksMessages[Math.floor(Math.random() * noTasksMessages.length)];
+      setGeneratedMessage(randomMessage);
+      setIsMessageGenerated(true);
+    } else if (isMessageGenerated && !noTasks) {
+      setGeneratedMessage(null);
+      setIsMessageGenerated(false);
+    }
+  }, [listData, tasks, isMessageGenerated]);
 
   const handleAddTask = async () => {
     if (!taskName || !startDate || !selectedListId) {
@@ -483,8 +503,8 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                   onChange={(e) => setTaskName(e.target.value)}
                   className="register-input"
                   required
-                ></input>
-
+                ></input>{" "}
+                <span className="required">*</span>
                 <input
                   type="date"
                   value={startDate}
@@ -493,8 +513,8 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                   }}
                   className="register-input"
                   required
-                />
-
+                />{" "}
+                <span className="required">*</span>
                 <input
                   type="time"
                   value={startTime}
@@ -502,7 +522,6 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                   onChange={(e) => setStartTime(e.target.value)}
                   className="register-input"
                 ></input>
-
                 <select
                   onChange={(e) => setSelectedListId(e.target.value)}
                   value={selectedListId}
@@ -517,30 +536,30 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                       {list.name}
                     </option>
                   ))}
-                </select>
-
+                </select>{" "}
+                <span className="required">*</span>
                 <img src="add-icon.png" onClick={handleAddTask}></img>
+                {/* <button className="home-button" onClick={handleAddTask}>
+                  <span className="text">Add</span>
+                </button> */}
               </div>
             </>
           )}
         </div>
 
         <div className="all-tasks">
-          {listData.length === 0 ||
-          Object.values(tasks).every((task) => task.length === 0) ? (
-            <p>
-              {
-                noTasksMessages[
-                  Math.floor(Math.random() * noTasksMessages.length)
-                ]
-              }
-            </p>
+          {generatedMessage ? (
+            <p id="no-tasks-message">{generatedMessage}</p>
           ) : (
             listData.map((list) => (
               <div
                 key={list.id}
                 className="tasks-by-lists"
-                style={{ border: `3px solid ${list.colour}` }}
+                style={
+                  tasks[list.id] && tasks[list.id].length > 0
+                    ? { border: `3px solid ${list.colour}` }
+                    : {}
+                }
               >
                 {tasks[list.id] && tasks[list.id].length > 0 ? (
                   <>

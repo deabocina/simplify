@@ -20,19 +20,19 @@
 .new-task.active {
   background-color: transparent;
   border: 2px solid white;
+  padding-bottom: 2px;
 }
 
 .new-task img {
   width: 20px;
   height: 20px;
   padding-top: 15px;
-  padding-left: 15px;
+  padding-left: 40px;
   cursor: pointer;
 }
 
 .new-task-info {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   padding-bottom: 12px;
 }
@@ -41,11 +41,28 @@
 .new-task-info select,
 .new-task-info button {
   margin-top: 15px;
+  padding-left: 15px;
+}
+
+.new-task-info input[type="time"] {
+  margin-right: 5px;
+}
+
+.new-task-info select {
+  padding-left: 40px;
+}
+
+.required {
+  color: red;
 }
 
 .all-tasks {
   margin: 0 auto;
   width: 80%;
+}
+
+#no-tasks-message {
+  text-align: center;
 }
 
 .tasks-by-lists {
@@ -106,7 +123,7 @@
 
 @media (min-width: 1024px) {
   .new-task {
-    width: 600px;
+    width: 700px;
     margin: 50px auto;
   }
 }
