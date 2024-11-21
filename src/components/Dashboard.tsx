@@ -49,8 +49,6 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
   const [startTime, setStartTime] = useState<string>("");
   const [selectedListId, setSelectedListId] = useState<string>("");
   const [updateTaskName, setUpdateTaskName] = useState<string>("");
-  // const [updateStartDate, setUpdateStartDate] = useState<string>("");
-  // const [updateStartTime, setUpdateStartTime] = useState<string>("");
   const [toggleAddTaskInfo, setToggleAddTaskInfo] = useState<boolean>(false);
   const [toggleTasks, setToggleTasks] = useState<{ [listId: string]: boolean }>(
     {}
@@ -358,6 +356,19 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
     }));
   };
 
+  const handleCompleteTask = (listId: string, taskId: string) => {
+    setTasks((prevTasks) => ({
+      ...prevTasks,
+      [listId]: prevTasks[listId].map((task) =>
+        task.id === taskId ? { ...task } : task
+      ),
+    }));
+
+    setTimeout(() => {
+      handleDeleteTask(listId, taskId);
+    }, 1000);
+  };
+
   return (
     <div className="task-container">
       <div className="task-options">
@@ -593,13 +604,27 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                                 )
                               }
                             ></img>
-                            <input type="checkbox"></input>
+
+                            <div key={task.id} className="task-done">
+                              <input
+                                type="checkbox"
+                                id={`task-${task.id}`}
+                                onChange={() =>
+                                  handleCompleteTask(list.id, task.id)
+                                }
+                              ></input>
+                              <label htmlFor={`task-${task.id}`}>
+                                {" "}
+                                {task.name}
+                              </label>
+                            </div>
 
                             {isOptionsVisible === task.id ? (
                               <ul className="options-button">
                                 <li>
                                   <img
                                     src="/edit.png"
+                                    className="option-icon"
                                     onClick={() => {
                                       setUpdateTaskName(task.name);
                                       setIsOptionsVisible(task.id);
@@ -617,6 +642,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                                 <li>
                                   <img
                                     src="/close.png"
+                                    className="option-icon"
                                     onClick={() =>
                                       handleDeleteTask(list.id, task.id)
                                     }
@@ -661,9 +687,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
                                   }
                                 }}
                               />
-                            ) : (
-                              <p>{task.name}</p>
-                            )}
+                            ) : null}
 
                             <p
                               className={`task-start ${
