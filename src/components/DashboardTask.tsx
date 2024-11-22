@@ -9,7 +9,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { getCurrentDate, checkDate } from "../utils/dateUtils";
+import { getCurrentDate, checkDate, getMinDate } from "../utils/dateUtils";
 import { noTasksMessages } from "../utils/taskUtils";
 import { Timestamp } from "firebase/firestore";
 
@@ -245,6 +245,7 @@ const DashboardTask = ({
               <input
                 type="date"
                 value={startDate}
+                min={getMinDate()}
                 onChange={(e) => {
                   setStartDate(e.target.value);
                 }}
@@ -311,7 +312,7 @@ const DashboardTask = ({
                       }`}
                       onClick={() => toggleTaskVisibility(list.id)}
                     ></img>
-                    <h2>{list.name}</h2>
+                    <h2 id="task-name">{list.name}</h2>
                     <h2 className="counter-style">
                       {getTaskCountByList(list.id)}
                     </h2>

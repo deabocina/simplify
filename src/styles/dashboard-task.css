@@ -10,6 +10,7 @@
 .new-task {
   display: flex;
   gap: 10px;
+  width: 80%;
   background-color: #eaebea5d;
   border-radius: 15px;
   border: 2px solid #cecece67;
@@ -33,15 +34,19 @@
 
 .new-task-info {
   display: flex;
-  width: 100%;
+  flex-wrap: wrap;
   padding-bottom: 12px;
+  align-items: center;
 }
 
 .new-task-info input,
-.new-task-info select,
 .new-task-info button {
   margin-top: 15px;
   padding-left: 15px;
+}
+
+.new-task-info select {
+  margin-top: 15px;
 }
 
 .new-task-info input[type="time"] {
@@ -49,7 +54,7 @@
 }
 
 .new-task-info select {
-  padding-left: 40px;
+  text-align: center;
 }
 
 .required {
@@ -59,6 +64,7 @@
 .all-tasks {
   margin: 0 auto;
   width: 80%;
+  padding-bottom: 100px;
 }
 
 #no-tasks-message {
@@ -68,6 +74,7 @@
 .tasks-by-lists {
   border-radius: 25px;
   margin-bottom: 10px;
+  background-color: white;
 }
 
 .toggle-tasks {
@@ -75,7 +82,22 @@
 }
 
 .toggle-tasks img {
-  padding-left: 20px;
+  margin-left: 20px;
+  padding-top: 2px;
+  background-color: rgba(255, 255, 255, 0.233);
+  border-radius: 20px;
+}
+
+.toggle-tasks .counter-style {
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+#task-name {
+  margin-left: 10px;
+  background-color: rgba(255, 255, 255, 0.233);
+  border-radius: 10px;
+  padding: 5px 20px;
 }
 
 .task-arrow {
@@ -152,9 +174,14 @@ input[type="checkbox"]:checked + label {
   }
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 1024px) {
+  .task-list {
+    padding-bottom: 100px;
+  }
+}
+
+@media (min-width: 1720px) {
   .new-task {
-    width: 700px;
-    margin: 50px auto;
+    width: 60%;
   }
 }

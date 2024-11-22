@@ -18,6 +18,7 @@
 .user-profile {
   display: flex;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .user-profile img {
@@ -36,7 +37,9 @@
 
 #logout-img {
   position: absolute;
-  margin: 40px 0 0 220px;
+  right: 0;
+  top: 40%;
+  margin-right: 20px;
 }
 
 #logout-img:hover {
@@ -45,7 +48,6 @@
 
 .list-details {
   display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -58,6 +60,7 @@
 
 .list-details .counter-style {
   margin-left: auto;
+  background-color: #cecece67;
 }
 
 .new-list {
@@ -110,5 +113,44 @@
   40%,
   100% {
     transform: rotateZ(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .task-options {
+    margin-left: -20px;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 70vh;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.705);
+  }
+
+  .list-details,
+  .new-list {
+    max-width: 300px;
+  }
+
+  .user-profile {
+    max-width: 340px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .task-options {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 70vh;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.705);
+  }
+
+  .list-details,
+  .new-list {
+    max-width: 600px;
+  }
+
+  .user-profile {
+    max-width: 640px;
   }
 }

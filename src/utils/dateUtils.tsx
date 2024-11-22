@@ -22,6 +22,14 @@ export const getCurrentDate = () => {
   return `${currentDay}, ${day}. ${month}. ${year}.`;
 };
 
+export const getMinDate = () => {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(today.getDate()).padStart(2, "0")}`;
+};
+
 export const formatDateTime = (date: Date) => {
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
