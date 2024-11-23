@@ -276,10 +276,12 @@ const DashboardTask = ({
                 ))}
               </select>{" "}
               <span className="required">*</span>
-              <img src="add-icon.png" onClick={handleAddTask}></img>
-              {/* <button className="home-button" onClick={handleAddTask}>
-                  <span className="text">Add</span>
-                </button> */}
+              <button
+                className="home-button add-task-button"
+                onClick={handleAddTask}
+              >
+                <span className="text">Add</span>
+              </button>
             </div>
           </>
         )}

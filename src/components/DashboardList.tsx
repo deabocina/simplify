@@ -236,7 +236,7 @@ const DashboardList = ({
 
         <input
           type="color"
-          defaultValue="#5b42f3"
+          defaultValue="#602d8b"
           onChange={(e) => setlistColour(e.target.value)}
         ></input>
         <input

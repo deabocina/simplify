@@ -9,6 +9,19 @@
   color: #989998;
 }
 
+.new-list img,
+.new-task img {
+  background-position: center;
+  transition: background-color 1.2s;
+  border-radius: 25px;
+}
+
+.new-list img:active,
+.new-task img:active {
+  background-color: #b6b6b677;
+  transition: background-color 0s;
+}
+
 .task-list h1,
 .user-info h2 {
   transition: transform 0.3s ease-in-out;

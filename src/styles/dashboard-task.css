@@ -27,20 +27,19 @@
 .new-task img {
   width: 20px;
   height: 20px;
-  padding-top: 15px;
-  padding-left: 40px;
+  margin: 10px 0 0 40px;
+  padding: 5px;
   cursor: pointer;
 }
 
 .new-task-info {
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
   align-items: center;
 }
 
-.new-task-info input,
-.new-task-info button {
+.new-task-info input {
   margin-top: 15px;
   padding-left: 15px;
 }
@@ -51,6 +50,7 @@
 
 .new-task-info input[type="time"] {
   margin-right: 5px;
+  margin-bottom: 2px;
 }
 
 .new-task-info select {
@@ -59,6 +59,17 @@
 
 .required {
   color: red;
+}
+
+.add-task-button {
+  margin-top: auto;
+  margin-left: 30px;
+  min-width: 70px;
+}
+
+.add-task-button span {
+  padding: 0;
+  font-size: 12px;
 }
 
 .all-tasks {
