@@ -4,7 +4,7 @@
 
 Simplify is a sleek and intuitive to-do list app designed to help you manage your tasks with ease and clarity. By focusing on simplicity and user-friendliness, Simplify features a minimalist interface, allowing for a seamless experience in managing to-do lists.
 
-![simplify](./assets/simplify.png)
+![simplify](/assets/simplify.png)
 
 ## List of Contents
 
