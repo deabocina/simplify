@@ -1,12 +1,10 @@
 # Simplify📝
 
-## 🛠️ Still under construction!
-
 ## Project Description
 
 Simplify is a sleek and intuitive to-do list app designed to help you manage your tasks with ease and clarity. By focusing on simplicity and user-friendliness, Simplify features a minimalist interface, allowing for a seamless experience in managing to-do lists.
 
-![simplify](https://github.com/user-attachments/assets/db62bbf8-886c-4580-8f37-30d7fe29ab6f)
+![simplify](./assets/simplify.png)
 
 ## List of Contents
 
@@ -17,12 +15,14 @@ Simplify is a sleek and intuitive to-do list app designed to help you manage you
 
 - **React, Vite and TypeScript:** The app is developed using modern web technologies like React (for UI components), Vite (for a fast development environment) and TypeScript (for type safety and better code maintenance).
 
-- **Data Persistence:** All tasks and lists are stored in Firebase’s NoSQL database, ensuring that data is securely saved and can be easily retrieved across devices.
+- **User Authentication:** With Firebase Authentication, users can securely sign in, ensuring that their tasks and lists are private and accessible only to them.
 
 - **Task and List Management:** Users can create, rename and delete task lists to keep their to-dos organized. Each list can contain tasks that users can easily create, rename or delete as well.
 
+- **Task Sorting:** Users can sort their lists by colour, allowing for customised organisation and a more visually appealing experience.
+
+- **Start Date and Time:** Users can set a start date for each task, and optionally, they can also specify the exact start time for more precise scheduling.
+
+- **Confetti Effect:** When all tasks are completed, users will be rewarded with a celebratory confetti effect, adding a fun touch to task completion.
+
 - **Responsive Design:** The application is fully responsive, ensuring optimal performance and display on various devices including desktops, tablets and mobile phones.
-
-- **Real-Time Synchronization:** Any changes made to tasks or lists are instantly reflected, ensuring real-time updates.
-
-- **User Authentication:** With Firebase Authentication, users can securely sign in, ensuring that their tasks and lists are private and accessible only to them.
