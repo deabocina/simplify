@@ -197,6 +197,14 @@ label {
 @media (max-width: 1024px) {
   .task-list {
     padding-bottom: 100px;
+    margin: 0 auto;
+    height: auto;
+    min-height: 90vh;
+    font-size: 14px;
+  }
+
+  #task-options {
+    margin-left: -20px;
   }
 }
 

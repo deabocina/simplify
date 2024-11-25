@@ -6,12 +6,13 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .register-container {
-  padding: 150px;
   width: 400px;
-  margin: 0 auto;
 }
 
 .register-container h1 {
@@ -50,13 +51,16 @@
 }
 
 .name-container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  gap: 2%;
 }
 
 .name-container input {
   width: 49%;
 }
+
 
 .password-container {
   position: relative;
@@ -128,41 +132,78 @@
   background: none;
 }
 
-@media (min-width: 768px) {
-  .home-button {
-    font-size: 24px;
-    min-width: 196px;
-  }
-}
-
 @media (max-width: 768px) {
   .register-container {
     padding: 30px;
-    padding-top: 150px;
     margin: 0 auto;
+    font-size: 14px;
+  }
+
+  .register-container h1 {
+    font-size: 40px;
   }
 
   .name-container {
-    width: 80%;
+    width: 70%;
     gap: 10px;
-    padding-left: 40px;
+    margin-left: 60px;
   }
 
   .register-form input {
-    width: 80%;
+    width: 70%;
     box-sizing: border-box;
+    font-size: 12px;
   }
 
   .password-container img {
-    right: 60px;
+    right: 70px;
+    width: 25px;
+    height: 25px;
   }
 
   .checkbox-terms {
-    padding-left: 40px;
+    margin-left: 55px;
   }
 
   .home-button {
     min-width: 80%;
     font-size: 18px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .register-container {
+    width: 350px;
+    padding: 50px;
+  }
+
+  .register-container h1 {
+    font-size: 40px;
+  }
+
+  .register-form input {
+    width: 90%;
+  }
+
+  .name-container {
+    width: 90%;
+    margin-left: 20px;
+    gap: 8px;
+  }
+
+  .checkbox-terms {
+    margin-left: 20px;
+  }
+
+  .home-button {
+    min-width: 70%;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .home-button {
+    font-size: 24px;
+    min-width: 196px;
   }
 }

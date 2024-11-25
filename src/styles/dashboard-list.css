@@ -118,11 +118,12 @@
 
 @media (max-width: 768px) {
   .task-options {
-    margin-left: -20px;
-    width: 100%;
+    width: 70%;
+    margin: 0 auto;
+    margin-left: -50px;
     max-width: none;
     height: auto;
-    min-height: 70vh;
+    min-height: 90vh;
     border-bottom: 5px solid rgba(0, 0, 0, 0.705);
   }
 
@@ -136,12 +137,14 @@
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .task-options {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    margin-left: -30px;
     max-width: none;
     height: auto;
-    min-height: 70vh;
+    min-height: 90vh;
     border-bottom: 5px solid rgba(0, 0, 0, 0.705);
   }
 
