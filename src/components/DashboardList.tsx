@@ -143,7 +143,7 @@ const DashboardList = ({
   return (
     <div className="task-options">
       <div className="user-profile">
-        <img src="/list.png"></img>
+        <img src="/simplify/list.png"></img>
         <div className="user-info">
           <h2>Simplify</h2>
           {userData && (
@@ -152,7 +152,7 @@ const DashboardList = ({
             </p>
           )}
         </div>
-        <img src="/logout.png" id="logout-img" onClick={onLogout}></img>
+        <img src="/simplify/logout.png" id="logout-img" onClick={onLogout}></img>
       </div>
       <div className="line-style"></div>
 
@@ -160,7 +160,7 @@ const DashboardList = ({
       {listData.map((list) => (
         <p key={list.id} className="list-info">
           <img
-            src="/options.png"
+            src="/simplify/options.png"
             onClick={() =>
               setIsOptionsVisible(isOptionsVisible === list.id ? null : list.id)
             }
@@ -169,7 +169,7 @@ const DashboardList = ({
             <ul className="options-button">
               <li>
                 <img
-                  src="/edit.png"
+                  src="/simplify/edit.png"
                   className="option-icon"
                   onClick={() => setUpdateListName(list.name)}
                 />
@@ -179,7 +179,7 @@ const DashboardList = ({
               </li>
               <li>
                 <img
-                  src="/close.png"
+                  src="/simplify/close.png"
                   className="option-icon"
                   onClick={() => handleDeleteList(list.id)}
                 />
@@ -232,7 +232,7 @@ const DashboardList = ({
         </p>
       ))}
       <div className="new-list">
-        <img src="/add.png" onClick={handleAddList}></img>
+        <img src="/simplify/add.png" onClick={handleAddList}></img>
 
         <input
           type="color"

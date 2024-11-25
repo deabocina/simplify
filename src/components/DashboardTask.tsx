@@ -48,6 +48,7 @@ const DashboardTask = ({
   fetchListsAndTasks,
   getTaskCountByList,
 }: DashboardTaskProps) => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [isOptionsVisible, setIsOptionsVisible] = useState<string | null>(null);
   const [generatedMessage, setGeneratedMessage] = useState<string | null>(null);
   const [isMessageGenerated, setIsMessageGenerated] = useState<boolean>(false);
@@ -64,23 +65,26 @@ const DashboardTask = ({
   useEffect(() => {
     fetchUserData();
     fetchListsAndTasks();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    const noTasks =
-      listData.length === 0 ||
-      Object.keys(tasks).length === 0 ||
-      Object.values(tasks).every((taskList) => taskList.length === 0);
+    if (!loading) {
+      const noTasks =
+        listData.length === 0 ||
+        Object.keys(tasks).length === 0 ||
+        Object.values(tasks).every((taskList) => taskList.length === 0);
 
-    if (!isMessageGenerated && noTasks) {
-      const randomMessage =
-        noTasksMessages[Math.floor(Math.random() * noTasksMessages.length)];
-      setGeneratedMessage(randomMessage);
-      setIsMessageGenerated(true);
-      launchConfetti();
-    } else if (isMessageGenerated && !noTasks) {
-      setGeneratedMessage(null);
-      setIsMessageGenerated(false);
+      if (!isMessageGenerated && noTasks) {
+        const randomMessage =
+          noTasksMessages[Math.floor(Math.random() * noTasksMessages.length)];
+        setGeneratedMessage(randomMessage);
+        setIsMessageGenerated(true);
+        launchConfetti();
+      } else if (isMessageGenerated && !noTasks) {
+        setGeneratedMessage(null);
+        setIsMessageGenerated(false);
+      }
     }
   }, [listData, tasks, isMessageGenerated]);
 
@@ -218,6 +222,10 @@ const DashboardTask = ({
     }, 1000);
   };
 
+  if (loading) {
+    return <div>Loading..</div>;
+  }
+
   return (
     <div className="task-list">
       <div className="greetings">
@@ -227,7 +235,7 @@ const DashboardTask = ({
 
       <div className={`new-task ${toggleAddTaskInfo ? "active" : null}`}>
         <img
-          src={!toggleAddTaskInfo ? "/add.png" : "/minus.png"}
+          src={!toggleAddTaskInfo ? "/simplify/add.png" : "/simplify/minus.png"}
           onClick={() => setToggleAddTaskInfo(!toggleAddTaskInfo)}
         ></img>
         {!toggleAddTaskInfo && <p>New Task</p>}
@@ -318,7 +326,7 @@ const DashboardTask = ({
                     style={{ backgroundColor: list.colour }}
                   >
                     <img
-                      src="arrow-down.png"
+                      src="/simplify/arrow-down.png"
                       className={`task-arrow ${
                         toggleTasks[list.id] ? "rotate-task-arrow" : ""
                       }`}
@@ -335,7 +343,7 @@ const DashboardTask = ({
                       {tasks[list.id].map((task) => (
                         <p key={task.id} className="list-info">
                           <img
-                            src="/options.png"
+                            src="/simplify/options.png"
                             id="task-options"
                             onClick={() =>
                               setIsOptionsVisible(
@@ -362,7 +370,7 @@ const DashboardTask = ({
                             <ul className="options-button">
                               <li>
                                 <img
-                                  src="/edit.png"
+                                  src="/simplify/edit.png"
                                   className="option-icon"
                                   onClick={() => {
                                     setUpdateTaskName(task.name);
@@ -380,7 +388,7 @@ const DashboardTask = ({
                               </li>
                               <li>
                                 <img
-                                  src="/close.png"
+                                  src="/simplify/close.png"
                                   className="option-icon"
                                   onClick={() =>
                                     handleDeleteTask(list.id, task.id)

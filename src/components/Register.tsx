@@ -102,7 +102,7 @@ const Register = ({ onRegister }: RegisterProps) => {
               required
             />
             <img
-              src={showPassword ? "/view.png" : "hide.png"}
+              src={showPassword ? "/simplify/view.png" : "/simplify/hide.png"}
               alt={showPassword ? "Hide password" : "Show password"}
               onClick={() => setShowPassword(!showPassword)}
             ></img>

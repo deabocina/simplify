@@ -32,7 +32,7 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <Router basename="/simplify">
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />{" "}
         <Route path="/login" element={<Login onLogin={handleLogin} />} />

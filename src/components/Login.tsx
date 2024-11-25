@@ -56,7 +56,7 @@ const Login = ({ onLogin }: LoginProps) => {
               required
             ></input>
             <img
-              src={showPassword ? "/view.png" : "/hide.png"}
+              src={showPassword ? "/simplify/view.png" : "/simplify/hide.png"}
               alt={showPassword ? "Hide Password" : "Show password"}
               onClick={() => setShowPassword(!showPassword)}
             ></img>
