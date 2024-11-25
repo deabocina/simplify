@@ -1,3 +1,5 @@
+import confetti from "canvas-confetti";
+
 export const noTasksMessages = [
   "Task-free zone! Is this intentional, or are you living the dream?",
   "So empty, so zen. Are you secretly a productivity guru?",
@@ -15,3 +17,11 @@ export const noTasksMessages = [
   "You’re officially on a task-free streak. Let’s keep it going!",
   "You’ve earned a task-free moment. Time to relax and recharge!",
 ];
+
+export const launchConfetti = () => {
+  confetti({
+    particleCount: 200,
+    spread: 200,
+    origin: { y: 0.6 },
+  });
+};

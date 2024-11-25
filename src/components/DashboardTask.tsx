@@ -10,7 +10,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { getCurrentDate, checkDate, getMinDate } from "../utils/dateUtils";
-import { noTasksMessages } from "../utils/taskUtils";
+import { noTasksMessages, launchConfetti } from "../utils/taskUtils";
 import { Timestamp } from "firebase/firestore";
 
 interface DashboardTaskProps {
@@ -77,6 +77,7 @@ const DashboardTask = ({
         noTasksMessages[Math.floor(Math.random() * noTasksMessages.length)];
       setGeneratedMessage(randomMessage);
       setIsMessageGenerated(true);
+      launchConfetti();
     } else if (isMessageGenerated && !noTasks) {
       setGeneratedMessage(null);
       setIsMessageGenerated(false);
@@ -289,7 +290,16 @@ const DashboardTask = ({
 
       <div className="all-tasks">
         {generatedMessage ? (
-          <p id="no-tasks-message">{generatedMessage}</p>
+          <>
+            {" "}
+            <p id="no-tasks-message">{generatedMessage}</p>
+            <button
+              className="home-button confetti-button"
+              onClick={() => launchConfetti()}
+            >
+              <span className="text">Success!</span>
+            </button>
+          </>
         ) : (
           listData.map((list) => (
             <div
