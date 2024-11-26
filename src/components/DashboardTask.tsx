@@ -12,6 +12,7 @@ import {
 import { getCurrentDate, checkDate, getMinDate } from "../utils/dateUtils";
 import { noTasksMessages, launchConfetti } from "../utils/taskUtils";
 import { Timestamp } from "firebase/firestore";
+import { icons } from "../assets/assets";
 
 interface DashboardTaskProps {
   userData: { name: string; surname: string } | null;
@@ -235,7 +236,11 @@ const DashboardTask = ({
 
       <div className={`new-task ${toggleAddTaskInfo ? "active" : null}`}>
         <img
-          src={!toggleAddTaskInfo ? "/simplify/add.png" : "/simplify/minus.png"}
+          src={
+            !toggleAddTaskInfo
+              ? icons.add
+              : icons.minus
+          }
           onClick={() => setToggleAddTaskInfo(!toggleAddTaskInfo)}
         ></img>
         {!toggleAddTaskInfo && <p>New Task</p>}
@@ -326,7 +331,7 @@ const DashboardTask = ({
                     style={{ backgroundColor: list.colour }}
                   >
                     <img
-                      src="/simplify/arrow-down.png"
+                      src={icons.arrowDown}
                       className={`task-arrow ${
                         toggleTasks[list.id] ? "rotate-task-arrow" : ""
                       }`}
@@ -343,7 +348,7 @@ const DashboardTask = ({
                       {tasks[list.id].map((task) => (
                         <p key={task.id} className="list-info">
                           <img
-                            src="/simplify/options.png"
+                            src={icons.options}
                             id="task-options"
                             onClick={() =>
                               setIsOptionsVisible(
@@ -370,7 +375,7 @@ const DashboardTask = ({
                             <ul className="options-button">
                               <li>
                                 <img
-                                  src="/simplify/edit.png"
+                                  src={icons.edit}
                                   className="option-icon"
                                   onClick={() => {
                                     setUpdateTaskName(task.name);
@@ -388,7 +393,7 @@ const DashboardTask = ({
                               </li>
                               <li>
                                 <img
-                                  src="/simplify/close.png"
+                                  src={icons.close}
                                   className="option-icon"
                                   onClick={() =>
                                     handleDeleteTask(list.id, task.id)

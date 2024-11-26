@@ -1,6 +1,7 @@
 import "../styles/index.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { icons } from "../assets/assets";
 import { auth, db, createUserWithEmailAndPassword } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -102,7 +103,7 @@ const Register = ({ onRegister }: RegisterProps) => {
               required
             />
             <img
-              src={showPassword ? "/simplify/view.png" : "/simplify/hide.png"}
+              src={showPassword ? icons.viewIcon : icons.hideIcon}
               alt={showPassword ? "Hide password" : "Show password"}
               onClick={() => setShowPassword(!showPassword)}
             ></img>

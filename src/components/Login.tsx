@@ -1,6 +1,7 @@
-import "../styles/index.css"
+import "../styles/index.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { icons } from "../assets/assets";
 import { auth, signInWithEmailAndPassword } from "../config/firebase";
 
 interface LoginProps {
@@ -56,7 +57,7 @@ const Login = ({ onLogin }: LoginProps) => {
               required
             ></input>
             <img
-              src={showPassword ? "/simplify/view.png" : "/simplify/hide.png"}
+              src={showPassword ? icons.viewIcon : icons.hideIcon}
               alt={showPassword ? "Hide Password" : "Show password"}
               onClick={() => setShowPassword(!showPassword)}
             ></img>

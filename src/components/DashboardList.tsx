@@ -1,6 +1,7 @@
 import "../styles/dashboard.css";
 import "../styles/dashboard-list.css";
 import { useState, useEffect } from "react";
+import { icons } from "../assets/assets";
 import { auth, db } from "../config/firebase";
 import {
   addDoc,
@@ -143,7 +144,7 @@ const DashboardList = ({
   return (
     <div className="task-options">
       <div className="user-profile">
-        <img src="/simplify/list.png"></img>
+        <img src={icons.logo}></img>
         <div className="user-info">
           <h2>Simplify</h2>
           {userData && (
@@ -152,7 +153,7 @@ const DashboardList = ({
             </p>
           )}
         </div>
-        <img src="/simplify/logout.png" id="logout-img" onClick={onLogout}></img>
+        <img src={icons.logout} id="logout-img" onClick={onLogout}></img>
       </div>
       <div className="line-style"></div>
 
@@ -160,7 +161,7 @@ const DashboardList = ({
       {listData.map((list) => (
         <p key={list.id} className="list-info">
           <img
-            src="/simplify/options.png"
+            src={icons.options}
             onClick={() =>
               setIsOptionsVisible(isOptionsVisible === list.id ? null : list.id)
             }
@@ -169,7 +170,7 @@ const DashboardList = ({
             <ul className="options-button">
               <li>
                 <img
-                  src="/simplify/edit.png"
+                  src={icons.edit}
                   className="option-icon"
                   onClick={() => setUpdateListName(list.name)}
                 />
@@ -179,7 +180,7 @@ const DashboardList = ({
               </li>
               <li>
                 <img
-                  src="/simplify/close.png"
+                  src={icons.close}
                   className="option-icon"
                   onClick={() => handleDeleteList(list.id)}
                 />
@@ -232,7 +233,7 @@ const DashboardList = ({
         </p>
       ))}
       <div className="new-list">
-        <img src="/simplify/add.png" onClick={handleAddList}></img>
+        <img src={icons.add} onClick={handleAddList}></img>
 
         <input
           type="color"
