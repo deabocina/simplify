@@ -215,6 +215,7 @@ const DashboardList = ({
                   if (e.key === "Enter") {
                     handleUpdateList(list.id, updateListName, updateListColour);
                     setUpdateListName("");
+                    setIsOptionsVisible(null);
                   }
                 }}
               />

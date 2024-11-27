@@ -129,7 +129,7 @@
 }
 
 #task-options {
-  padding-left: 42px;
+  margin-left: 20px;
 }
 
 #end-date-style {
@@ -201,10 +201,6 @@ label {
     height: auto;
     min-height: 90vh;
     font-size: 14px;
-  }
-
-  #task-options {
-    margin-left: -20px;
   }
 }
 
