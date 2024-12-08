@@ -236,11 +236,7 @@ const DashboardTask = ({
 
       <div className={`new-task ${toggleAddTaskInfo ? "active" : null}`}>
         <img
-          src={
-            !toggleAddTaskInfo
-              ? icons.add
-              : icons.minus
-          }
+          src={!toggleAddTaskInfo ? icons.add : icons.minus}
           onClick={() => setToggleAddTaskInfo(!toggleAddTaskInfo)}
         ></img>
         {!toggleAddTaskInfo && <p>New Task</p>}
@@ -292,7 +288,10 @@ const DashboardTask = ({
               <span className="required">*</span>
               <button
                 className="home-button add-task-button"
-                onClick={handleAddTask}
+                onClick={() => {
+                  handleAddTask();
+                  setToggleAddTaskInfo(!toggleAddTaskInfo);
+                }}
               >
                 <span className="text">Add</span>
               </button>

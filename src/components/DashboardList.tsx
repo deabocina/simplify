@@ -144,7 +144,7 @@ const DashboardList = ({
   return (
     <div className="task-options">
       <div className="user-profile">
-        <img src={icons.logo}></img>
+        <img src={icons.logo} id="logo-img" />
         <div className="user-info">
           <h2>Simplify</h2>
           {userData && (

@@ -2,7 +2,7 @@
   width: 500px;
   padding: 70px 100px;
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
   background-image: url("../assets/backgrounds/home.png");
   background-size: cover;
   background-position: center;
@@ -117,43 +117,44 @@
 }
 
 @media (max-width: 768px) {
+  #logo-img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .user-info {
+    font-size: 14px;
+  }
+
   .task-options {
-    width: 70%;
-    margin: 0 auto;
-    margin-left: -50px;
-    max-width: none;
-    height: auto;
-    min-height: 90vh;
+    width: 100%;
+    margin: 0;
+    padding: 70px 50px;
+    min-height: 100vh;
     border-bottom: 5px solid rgba(0, 0, 0, 0.705);
+    box-sizing: border-box;
   }
 
   .list-details,
-  .new-list {
-    max-width: 300px;
-  }
-
+  .new-list,
   .user-profile {
-    max-width: 340px;
+    max-width: 100%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .task-options {
-    width: 75%;
+    width: 100%;
     margin: 0 auto;
-    margin-left: -30px;
-    max-width: none;
-    height: auto;
-    min-height: 90vh;
+    padding: 70px;
+    min-height: 100vh;
     border-bottom: 5px solid rgba(0, 0, 0, 0.705);
+    box-sizing: border-box;
   }
 
   .list-details,
-  .new-list {
-    max-width: 600px;
-  }
-
+  .new-list,
   .user-profile {
-    max-width: 640px;
+    max-width: 100%;
   }
 }

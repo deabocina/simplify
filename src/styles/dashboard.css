@@ -82,36 +82,31 @@
 }
 
 .options-button {
-  margin-top: 198px;
+  margin-top: 190px;
   position: absolute;
   border-radius: 25px;
-  width: 140px;
+  width: 130px;
   background-color: white;
   z-index: 10;
   overflow-y: auto;
   list-style: none;
-  padding: 10px;
+  padding: 5px;
   border: 2px solid rgb(231, 231, 231);
 }
 
 .options-button li {
-  padding: 8px;
+  padding: 4px;
+  margin-bottom: 6px;
   cursor: pointer;
-  border-bottom: 1px solid rgb(231, 231, 231);
-}
-
-.options-button li:last-child {
-  border: none;
 }
 
 .option-icon {
-  margin-left: -10px;
-  padding-right: 7px;
-  transform: translateY(30%);
+  transform: translateY(11px);
 }
 
 .options-button button {
   font-size: 15px;
+  color: #696969;
   background-color: transparent;
   border: none;
   cursor: pointer;

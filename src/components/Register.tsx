@@ -121,6 +121,8 @@ const Register = ({ onRegister }: RegisterProps) => {
                 I agree to the{" "}
                 <Link
                   to="https://www.termsfeed.com/live/b212b84e-d5e2-4b88-8d0c-8c668bca5586"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="link-style"
                 >
                   Terms & Conditions
