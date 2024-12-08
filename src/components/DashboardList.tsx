@@ -55,7 +55,7 @@ const DashboardList = ({
   getTaskCountByList,
 }: DashboardListProps) => {
   const [listName, setListName] = useState<string>("");
-  const [listColour, setlistColour] = useState<string>("");
+  const [listColour, setlistColour] = useState<string>("#602d8b");
   const [isOptionsVisible, setIsOptionsVisible] = useState<string | null>(null);
   const [updateListName, setUpdateListName] = useState<string>("");
   const [updateListColour, setUpdateListColour] = useState<string>("");
@@ -238,7 +238,7 @@ const DashboardList = ({
 
         <input
           type="color"
-          defaultValue="#602d8b"
+          value={listColour}
           onChange={(e) => setlistColour(e.target.value)}
         ></input>
         <input
