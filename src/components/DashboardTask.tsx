@@ -2,13 +2,7 @@ import "../styles/dashboard.css";
 import "../styles/dashboard-task.css";
 import { useState, useEffect } from "react";
 import { auth, db } from "../config/firebase";
-import {
-  addDoc,
-  collection,
-  doc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { addDoc, collection, doc, deleteDoc } from "firebase/firestore";
 import { getCurrentDate, checkDate, getMinDate } from "../utils/dateUtils";
 import { noTasksMessages, launchConfetti } from "../utils/taskUtils";
 import { Timestamp } from "firebase/firestore";
@@ -50,14 +44,12 @@ const DashboardTask = ({
   getTaskCountByList,
 }: DashboardTaskProps) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [isOptionsVisible, setIsOptionsVisible] = useState<string | null>(null);
   const [generatedMessage, setGeneratedMessage] = useState<string | null>(null);
   const [isMessageGenerated, setIsMessageGenerated] = useState<boolean>(false);
   const [taskName, setTaskName] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
   const [startTime, setStartTime] = useState<string>("");
   const [selectedListId, setSelectedListId] = useState<string>("");
-  const [updateTaskName, setUpdateTaskName] = useState<string>("");
   const [toggleAddTaskInfo, setToggleAddTaskInfo] = useState<boolean>(false);
   const [toggleTasks, setToggleTasks] = useState<{ [listId: string]: boolean }>(
     {}
@@ -162,39 +154,6 @@ const DashboardTask = ({
     }
   };
 
-  const handleUpdateTask = async (
-    listId: string,
-    taskId: string,
-    newName: string
-  ) => {
-    try {
-      await updateDoc(
-        doc(
-          db,
-          "users",
-          auth.currentUser!.uid,
-          "lists",
-          listId,
-          "tasks",
-          taskId
-        ),
-        {
-          name: newName,
-        }
-      );
-
-      setTasks((updatedTasks) => ({
-        ...updatedTasks,
-        [listId]: updatedTasks[listId].map((task) =>
-          task.id === taskId ? { ...task, name: newName } : task
-        ),
-      }));
-      setTaskName("");
-    } catch (error) {
-      console.log(`Error updating task: ${error}`);
-    }
-  };
-
   useEffect(() => {
     const toggleTaskState: { [listId: string]: boolean } = {};
     listData.forEach((list) => {
@@ -230,13 +189,20 @@ const DashboardTask = ({
   return (
     <div className="task-list">
       <div className="greetings">
-        {userData && <h1>Hello, {userData.name}!</h1>}
+        <h1>Hello{userData ? `, ${userData.name}` : ""}!</h1>
+        {userData && <h3>Welcome back!</h3>}
+        <img src={icons.calendar} alt="calendar icon" />
         <p className="text-colour">It's {getCurrentDate()}</p>
       </div>
 
+      <p className="task-info-note">
+        <strong>Note:</strong> All fields are <span>required</span> except for
+        the start time ⏰
+      </p>
+
       <div className={`new-task ${toggleAddTaskInfo ? "active" : null}`}>
         <img
-          src={!toggleAddTaskInfo ? icons.add : icons.minus}
+          src={!toggleAddTaskInfo ? icons.add : icons.remove}
           onClick={() => setToggleAddTaskInfo(!toggleAddTaskInfo)}
         ></img>
         {!toggleAddTaskInfo && <p>New Task</p>}
@@ -251,7 +217,6 @@ const DashboardTask = ({
                 className="register-input"
                 required
               ></input>{" "}
-              <span className="required">*</span>
               <input
                 type="date"
                 value={startDate}
@@ -262,7 +227,6 @@ const DashboardTask = ({
                 className="register-input"
                 required
               />{" "}
-              <span className="required">*</span>
               <input
                 type="time"
                 value={startTime}
@@ -285,7 +249,6 @@ const DashboardTask = ({
                   </option>
                 ))}
               </select>{" "}
-              <span className="required">*</span>
               <button
                 className="home-button add-task-button"
                 onClick={() => {
@@ -319,7 +282,7 @@ const DashboardTask = ({
               className="tasks-by-lists"
               style={
                 tasks[list.id] && tasks[list.id].length > 0
-                  ? { border: `3px solid ${list.colour}` }
+                  ? { background: "#cccccc0c" }
                   : {}
               }
             >
@@ -327,13 +290,14 @@ const DashboardTask = ({
                 <>
                   <div
                     className="toggle-tasks"
-                    style={{ backgroundColor: list.colour }}
+                    style={{
+                      backgroundColor: list.colour,
+                      borderRadius: "15px",
+                      padding: "5px 20px",
+                    }}
                   >
                     <img
                       src={icons.arrowDown}
-                      className={`task-arrow ${
-                        toggleTasks[list.id] ? "rotate-task-arrow" : ""
-                      }`}
                       onClick={() => toggleTaskVisibility(list.id)}
                     ></img>
                     <h2 id="task-name">{list.name}</h2>
@@ -346,16 +310,6 @@ const DashboardTask = ({
                     <>
                       {tasks[list.id].map((task) => (
                         <p key={task.id} className="list-info">
-                          <img
-                            src={icons.options}
-                            id="task-options"
-                            onClick={() =>
-                              setIsOptionsVisible(
-                                isOptionsVisible === task.id ? null : task.id
-                              )
-                            }
-                          ></img>
-
                           <div key={task.id} className="task-done">
                             <input
                               type="checkbox"
@@ -369,76 +323,6 @@ const DashboardTask = ({
                               {task.name}
                             </label>
                           </div>
-
-                          {isOptionsVisible === task.id ? (
-                            <ul className="options-button">
-                              <li>
-                                <img
-                                  src={icons.edit}
-                                  className="option-icon"
-                                  onClick={() => {
-                                    setUpdateTaskName(task.name);
-                                    setIsOptionsVisible(task.id);
-                                  }}
-                                ></img>
-                                <button
-                                  onClick={() => {
-                                    setUpdateTaskName(task.name);
-                                    setIsOptionsVisible(task.id);
-                                  }}
-                                >
-                                  Edit
-                                </button>
-                              </li>
-                              <li>
-                                <img
-                                  src={icons.close}
-                                  className="option-icon"
-                                  onClick={() =>
-                                    handleDeleteTask(list.id, task.id)
-                                  }
-                                ></img>
-                                <button
-                                  onClick={() =>
-                                    handleDeleteTask(list.id, task.id)
-                                  }
-                                >
-                                  Delete
-                                </button>
-                              </li>
-                            </ul>
-                          ) : null}
-
-                          {updateTaskName && isOptionsVisible === task.id ? (
-                            <input
-                              type="text"
-                              value={updateTaskName}
-                              className="register-input"
-                              onChange={(e) =>
-                                setUpdateTaskName(e.target.value)
-                              }
-                              onBlur={() => {
-                                handleUpdateTask(
-                                  list.id,
-                                  task.id,
-                                  updateTaskName
-                                );
-                                setUpdateTaskName("");
-                                setIsOptionsVisible(null);
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key == "Enter") {
-                                  handleUpdateTask(
-                                    list.id,
-                                    task.id,
-                                    updateTaskName
-                                  );
-                                  setUpdateTaskName("");
-                                  setIsOptionsVisible(null);
-                                }
-                              }}
-                            />
-                          ) : null}
 
                           <p
                             className={`task-start ${

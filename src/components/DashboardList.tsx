@@ -8,7 +8,6 @@ import {
   collection,
   doc,
   getDocs,
-  updateDoc,
   deleteDoc,
 } from "firebase/firestore";
 import { Timestamp } from "firebase/firestore";
@@ -45,7 +44,6 @@ interface DashboardListProps {
 
 const DashboardList = ({
   onLogout,
-  userData,
   listData,
   tasks,
   setListData,
@@ -56,9 +54,6 @@ const DashboardList = ({
 }: DashboardListProps) => {
   const [listName, setListName] = useState<string>("");
   const [listColour, setlistColour] = useState<string>("#602d8b");
-  const [isOptionsVisible, setIsOptionsVisible] = useState<string | null>(null);
-  const [updateListName, setUpdateListName] = useState<string>("");
-  const [updateListColour, setUpdateListColour] = useState<string>("");
 
   useEffect(() => {
     fetchUserData();
@@ -106,135 +101,55 @@ const DashboardList = ({
     }
   };
 
-  const handleUpdateList = async (
-    listId: string,
-    newName?: string,
-    newColour?: string
-  ) => {
-    const currentList = listData.find((list) => listId === list.id);
-    if (!currentList) {
-      console.error(`List not found.`);
-      return;
-    }
+  const getTaskOverview = () => {
+    const totalLists = listData.length;
+    const totalTasks = Object.values(tasks).reduce(
+      (count, taskList) => count + taskList.length,
+      0
+    );
+    const avgTasks = totalLists > 0 ? (totalTasks / totalLists).toFixed(1) : 0;
 
-    // Check current values
-    const updatedName = newName || currentList.name;
-    const updatedColour = newColour || currentList.colour;
-
-    try {
-      await updateDoc(
-        doc(db, "users", auth.currentUser!.uid, "lists", listId),
-        {
-          name: updatedName,
-          colour: updatedColour,
-        }
-      );
-      setListData(
-        listData.map((list) =>
-          list.id === listId
-            ? { ...list, name: updatedName, colour: updatedColour }
-            : list
-        )
-      );
-    } catch (error) {
-      console.log(`Error updating list: ${error}`);
-    }
+    return { totalLists, totalTasks, avgTasks };
   };
+
+  const { totalLists, totalTasks, avgTasks } = getTaskOverview();
 
   return (
     <div className="task-options">
       <div className="user-profile">
         <img src={icons.logo} id="logo-img" />
-        <div className="user-info">
-          <h2>Simplify</h2>
-          {userData && (
-            <p className="text-colour">
-              {userData.name} {userData.surname}
-            </p>
-          )}
-        </div>
         <img src={icons.logout} id="logout-img" onClick={onLogout}></img>
       </div>
-      <div className="line-style"></div>
 
       <h3>My Lists</h3>
+      <p className="dashboard-note">
+        Every great plan starts with a list — make yours below
+      </p>
+
       {listData.map((list) => (
         <p key={list.id} className="list-info">
-          <img
-            src={icons.options}
-            onClick={() =>
-              setIsOptionsVisible(isOptionsVisible === list.id ? null : list.id)
-            }
-          />
-          {isOptionsVisible === list.id ? (
-            <ul className="options-button">
-              <li>
-                <img
-                  src={icons.edit}
-                  className="option-icon"
-                  onClick={() => setUpdateListName(list.name)}
-                />
-                <button onClick={() => setUpdateListName(list.name)}>
-                  Edit
-                </button>
-              </li>
-              <li>
-                <img
-                  src={icons.close}
-                  className="option-icon"
-                  onClick={() => handleDeleteList(list.id)}
-                />
-                <button onClick={() => handleDeleteList(list.id)}>
-                  Delete
-                </button>
-              </li>
-            </ul>
-          ) : null}
-
-          {updateListName && isOptionsVisible === list.id ? (
-            <div>
-              <input
-                type="color"
-                value={updateListColour || list.colour}
-                onChange={(e) => setUpdateListColour(e.target.value)}
-                onBlur={() => {
-                  handleUpdateList(list.id, updateListName, updateListColour);
-                  setUpdateListColour("");
-                }}
-              />
-              <input
-                type="text"
-                value={updateListName || list.name}
-                onChange={(e) => setUpdateListName(e.target.value)}
-                className="register-input"
-                onBlur={() => {
-                  handleUpdateList(list.id, updateListName, updateListColour);
-                  setUpdateListName("");
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleUpdateList(list.id, updateListName, updateListColour);
-                    setUpdateListName("");
-                    setIsOptionsVisible(null);
-                  }
-                }}
-              />
-            </div>
-          ) : (
-            <div className="list-details">
-              <div
-                className="colour-icon"
-                style={{ backgroundColor: list.colour }}
-                title={list.colour}
-              ></div>
-              <p>{list.name}</p>
-              <p className="counter-style">{getTaskCountByList(list.id)}</p>
-            </div>
-          )}
+          <div className="list-details">
+            <div
+              className="colour-icon"
+              style={{ backgroundColor: list.colour }}
+              title={list.colour}
+            ></div>
+            <p>{list.name}</p>
+            <p className="counter-style">{getTaskCountByList(list.id)}</p>
+            <img
+              src={icons.close}
+              className="option-icon"
+              onClick={() => handleDeleteList(list.id)}
+            />
+          </div>
         </p>
       ))}
       <div className="new-list">
-        <img src={icons.add} onClick={handleAddList}></img>
+        <img
+          src={icons.add}
+          onClick={handleAddList}
+          className="option-icon"
+        ></img>
 
         <input
           type="color"
@@ -256,6 +171,34 @@ const DashboardList = ({
           className="register-input"
           placeholder="Create new list.."
         />
+      </div>
+
+      <div className="task-overview">
+        <h3>Task Overview</h3>
+        <div className="overview-stats">
+          <div className="overview-box">
+            <span className="overview-number">{totalLists}</span>
+            <span className="overview-label">Lists</span>
+          </div>
+          <div className="overview-box">
+            <span className="overview-number">{totalTasks}</span>
+            <span className="overview-label">Total Tasks</span>
+          </div>
+          <div className="overview-box">
+            <span className="overview-number">{avgTasks}</span>
+            <span className="overview-label">Avg. per List</span>
+          </div>
+        </div>
+
+        <p className="overview-text">
+          {totalTasks === 0
+            ? "You don’t have any tasks yet — time to get started!"
+            : totalTasks < 5
+            ? "Nice and light workload — keep up the balance"
+            : totalTasks < 15
+            ? "You're managing quite a few tasks, stay focused"
+            : "Whoa! You’re in productivity overdrive"}
+        </p>
       </div>
     </div>
   );
