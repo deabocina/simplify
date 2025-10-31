@@ -4,12 +4,11 @@
 
 By focusing on simplicity and user-friendliness, Simplify features a minimalist interface, allowing for a seamless experience in managing to-do lists.
 
-![simplify](https://raw.githubusercontent.com/deabocina/simplify/main/public/screenshots/simplify.png)
+![simplify](https://raw.githubusercontent.com/deabocina/simplify/main/public/screenshots/simplify.jpeg)
 
 ### **📋 Effortless Task and List Management**  
 Say goodbye to clutter and hello to organisation!  
 - **Create** new to-do lists in a snap.  
-- **Rename** lists and tasks effortlessly.  
 - **Delete** items with a click when they’re no longer needed. 
 
 ### **🎨 Colour-Coded Task Sorting**  
@@ -38,5 +37,3 @@ Your tasks are safe with us! Simplify integrates **Firebase Authentication**, pr
 Whether you're working on a laptop, tablet or smartphone, Simplify is here for you.  
 - Fully responsive design ensures a seamless experience on any screen size.  
 - Stay productive wherever you are, whenever you need. 
-
-![simplify](https://raw.githubusercontent.com/deabocina/simplify/main/public/screenshots/showcase.png)
