@@ -166,10 +166,7 @@
   color: #00ff00;
 }
 
-/* ================================ */
-/* RESPONSIVE STYLES FOR TASK-LIST */
-/* ================================ */
-
+/* Responsive */
 /* Medium screens (tablet, 1024px) */
 @media (max-width: 1024px) {
   .task-list {
@@ -178,7 +175,7 @@
     margin: 0 auto;
   }
 
-  /* Greeting box smanjenje paddinga */
+  /* Greeting box */
   .greetings {
     padding: 25px 30px;
     margin: 30px auto;
@@ -197,7 +194,7 @@
     height: 28px;
   }
 
-  /* New task box smanjenje širine */
+  /* New task box */
   .new-task {
     width: 90%;
     gap: 20px;
@@ -224,14 +221,14 @@
 @media (max-width: 768px) {
   .task-list {
     width: 95%;
-    margin-left: -15px;
+    margin-left: -12px;
   }
 
   /* Greeting box */
   .greetings {
     padding: 20px 15px;
     margin: 20px auto;
-    width: 95%;
+    width: 96%;
   }
 
   .greetings h1 {
@@ -263,7 +260,7 @@
 
   .new-task-info input,
   .new-task-info select {
-    width: 100%;
+    width: 90%;
     padding: 8px;
   }
 

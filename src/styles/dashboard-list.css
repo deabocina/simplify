@@ -243,16 +243,40 @@
   }
 }
 
+/* Tablet view */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .task-options {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    border-radius: 25px;
+    padding: 20px 25px;
+    box-sizing: border-box;
+  }
+
+  .list-details {
+    width: 100%;
+    grid-template-columns: 40px 1fr 50px 30px;
+  }
+
+  .overview-stats {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .task-options {
     width: 90%;
     min-height: auto;
+    margin: 0 auto;
   }
 
   .list-details {
     grid-template-columns: 30px 1fr 35px 25px;
     gap: 5px;
     padding: 6px 8px;
+    width: 100%;
+    justify-content: center;
   }
 
   .counter-style {
@@ -283,7 +307,13 @@
 
   /* Overview */
   .overview-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 25px;
+    width: 100%;
+    text-align: center;
   }
 
   .overview-box {
@@ -304,8 +334,12 @@
   }
 }
 
-/* Extra small screens (mobile portrait) */
 @media (max-width: 480px) {
+  .task-options {
+    width: 95%;
+    padding: 10px;
+  }
+
   .overview-box {
     min-width: 70px;
     padding: 8px 10px;
